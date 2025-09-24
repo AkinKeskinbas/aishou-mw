@@ -1,0 +1,130 @@
+[
+  {
+    "_id": "personality_en",
+    "testId": "personality",
+    "title": "Personality Assessment",
+    "category": "Psychology",
+    "activeVersion": 1,
+    "isActive": true,
+    "isPremium": false,
+    "display": {
+      "resultCard": "AUTO",
+      "color": "#6366F1",
+      "icon": "🧠"
+    },
+    "locale": "en",
+    "createdAt": 1700000000000
+  },
+  {
+    "_id": "personality_ja",
+    "testId": "personality",
+    "title": "性格診断",
+    "category": "心理学",
+    "activeVersion": 1,
+    "isActive": true,
+    "isPremium": false,
+    "display": {
+      "resultCard": "AUTO",
+      "color": "#6366F1",
+      "icon": "🧠"
+    },
+    "locale": "ja",
+    "createdAt": 1700000000000
+  },
+  {
+    "_id": "love_compatibility_en",
+    "testId": "love_compatibility",
+    "title": "Love Compatibility Test",
+    "category": "Relationships",
+    "activeVersion": 1,
+    "isActive": true,
+    "isPremium": true,
+    "display": {
+      "resultCard": "AUTO",
+      "color": "#EC4899",
+      "icon": "💕"
+    },
+    "locale": "en",
+    "createdAt": 1700000000000
+  },
+  {
+    "_id": "love_compatibility_ja",
+    "testId": "love_compatibility",
+    "title": "恋愛相性診断",
+    "category": "恋愛関係",
+    "activeVersion": 1,
+    "isActive": true,
+    "isPremium": true,
+    "display": {
+      "resultCard": "AUTO",
+      "color": "#EC4899",
+      "icon": "💕"
+    },
+    "locale": "ja",
+    "createdAt": 1700000000000
+  },
+  {
+    "_id": "career_match_en",
+    "testId": "career_match",
+    "title": "Career Compatibility",
+    "category": "Professional",
+    "activeVersion": 1,
+    "isActive": true,
+    "isPremium": false,
+    "display": {
+      "resultCard": "AUTO",
+      "color": "#10B981",
+      "icon": "💼"
+    },
+    "locale": "en",
+    "createdAt": 1700000000000
+  },
+  {
+    "_id": "career_match_ja",
+    "testId": "career_match",
+    "title": "キャリア適性診断",
+    "category": "職業",
+    "activeVersion": 1,
+    "isActive": true,
+    "isPremium": false,
+    "display": {
+      "resultCard": "AUTO",
+      "color": "#10B981",
+      "icon": "💼"
+    },
+    "locale": "ja",
+    "createdAt": 1700000000000
+  },
+  {
+    "_id": "friendship_test_en",
+    "testId": "friendship_test",
+    "title": "Friendship Analysis",
+    "category": "Social",
+    "activeVersion": 1,
+    "isActive": true,
+    "isPremium": true,
+    "display": {
+      "resultCard": "AUTO",
+      "color": "#F59E0B",
+      "icon": "👥"
+    },
+    "locale": "en",
+    "createdAt": 1700000000000
+  },
+  {
+    "_id": "friendship_test_ja",
+    "testId": "friendship_test",
+    "title": "友情分析テスト",
+    "category": "社会性",
+    "activeVersion": 1,
+    "isActive": true,
+    "isPremium": true,
+    "display": {
+      "resultCard": "AUTO",
+      "color": "#F59E0B",
+      "icon": "👥"
+    },
+    "locale": "ja",
+    "createdAt": 1700000000000
+  }
+]

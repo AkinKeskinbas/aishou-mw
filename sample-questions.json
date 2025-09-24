@@ -1,0 +1,122 @@
+[
+  {
+    "_id": "personality_1_0_en",
+    "testId": "personality",
+    "version": 1,
+    "index": 0,
+    "text": "When you're at a party, you usually:",
+    "choices": [
+      {"key": "A", "text": "Seek out the liveliest group"},
+      {"key": "B", "text": "Find one interesting person to talk to"},
+      {"key": "C", "text": "Prefer to leave early"},
+      {"key": "D", "text": "Help organize activities"}
+    ],
+    "weights": {
+      "A": {"extrovert": 3, "sensing": 1},
+      "B": {"introvert": 2, "intuition": 1},
+      "C": {"introvert": 3},
+      "D": {"extrovert": 2, "judging": 2}
+    },
+    "locale": "en"
+  },
+  {
+    "_id": "personality_1_0_ja",
+    "testId": "personality",
+    "version": 1,
+    "index": 0,
+    "text": "パーティーにいるとき、あなたは通常：",
+    "choices": [
+      {"key": "A", "text": "最も活気のあるグループを探す"},
+      {"key": "B", "text": "興味深い人を一人見つけて話す"},
+      {"key": "C", "text": "早く帰ることを好む"},
+      {"key": "D", "text": "活動の企画を手伝う"}
+    ],
+    "weights": {
+      "A": {"extrovert": 3, "sensing": 1},
+      "B": {"introvert": 2, "intuition": 1},
+      "C": {"introvert": 3},
+      "D": {"extrovert": 2, "judging": 2}
+    },
+    "locale": "ja"
+  },
+  {
+    "_id": "personality_1_1_en",
+    "testId": "personality",
+    "version": 1,
+    "index": 1,
+    "text": "When making decisions, you rely more on:",
+    "choices": [
+      {"key": "A", "text": "Logic and objective analysis"},
+      {"key": "B", "text": "Personal values and feelings"},
+      {"key": "C", "text": "Past experiences"},
+      {"key": "D", "text": "Gut instinct"}
+    ],
+    "weights": {
+      "A": {"thinking": 3, "judging": 1},
+      "B": {"feeling": 3, "perceiving": 1},
+      "C": {"sensing": 2, "thinking": 1},
+      "D": {"intuition": 2, "perceiving": 2}
+    },
+    "locale": "en"
+  },
+  {
+    "_id": "personality_1_1_ja",
+    "testId": "personality",
+    "version": 1,
+    "index": 1,
+    "text": "決定を下すとき、あなたは以下のどれに頼りますか：",
+    "choices": [
+      {"key": "A", "text": "論理と客観的分析"},
+      {"key": "B", "text": "個人的価値観と感情"},
+      {"key": "C", "text": "過去の経験"},
+      {"key": "D", "text": "直感"}
+    ],
+    "weights": {
+      "A": {"thinking": 3, "judging": 1},
+      "B": {"feeling": 3, "perceiving": 1},
+      "C": {"sensing": 2, "thinking": 1},
+      "D": {"intuition": 2, "perceiving": 2}
+    },
+    "locale": "ja"
+  },
+  {
+    "_id": "love_compatibility_1_0_en",
+    "testId": "love_compatibility",
+    "version": 1,
+    "index": 0,
+    "text": "In a romantic relationship, what matters most to you?",
+    "choices": [
+      {"key": "A", "text": "Deep emotional connection"},
+      {"key": "B", "text": "Shared interests and activities"},
+      {"key": "C", "text": "Physical attraction"},
+      {"key": "D", "text": "Intellectual compatibility"}
+    ],
+    "weights": {
+      "A": {"feeling": 3, "intuition": 2},
+      "B": {"sensing": 2, "extrovert": 1},
+      "C": {"sensing": 3, "perceiving": 1},
+      "D": {"thinking": 3, "intuition": 1}
+    },
+    "locale": "en"
+  },
+  {
+    "_id": "love_compatibility_1_0_ja",
+    "testId": "love_compatibility",
+    "version": 1,
+    "index": 0,
+    "text": "恋愛関係で最も重要なことは何ですか？",
+    "choices": [
+      {"key": "A", "text": "深い感情的つながり"},
+      {"key": "B", "text": "共通の趣味と活動"},
+      {"key": "C", "text": "身体的魅力"},
+      {"key": "D", "text": "知的相性"}
+    ],
+    "weights": {
+      "A": {"feeling": 3, "intuition": 2},
+      "B": {"sensing": 2, "extrovert": 1},
+      "C": {"sensing": 3, "perceiving": 1},
+      "D": {"thinking": 3, "intuition": 1}
+    },
+    "locale": "ja"
+  }
+]
