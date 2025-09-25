@@ -38,3 +38,12 @@ out/
 ### Environment Variables ###
 .env
 *.env
+# Kotlin build cache
+.kotlin/
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+# AWS deployment with real credentials
+aws-deploy/.env
