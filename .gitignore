@@ -47,3 +47,7 @@ out/
 
 # AWS deployment with real credentials
 aws-deploy/.env
+
+# IDE files with potential secrets
+.idea/workspace.xml
+*.iml
