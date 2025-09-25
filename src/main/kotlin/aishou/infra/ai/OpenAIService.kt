@@ -27,6 +27,10 @@ class OpenAIService(
             "jp", "ja" -> """あなたはMBTI専門の性格分析者です。
                 与えられたクイズの回答からMBTIタイプと星座を特定してください。詳細な分析は不要です。
                 重要: 回答は必ず日本語で行ってください。英語は一切使用しないでください。"""
+            "zh" -> """你是MBTI专家。根据问卷回答确定MBTI类型和星座。不需要详细分析。
+                重要：你必须仅用中文回答。不要使用任何其他语言。"""
+            "ko" -> """당신은 MBTI 전문가입니다. 퀴즈 답변에서 MBTI 유형과 별자리를 식별해주세요. 자세한 분석은 필요하지 않습니다.
+                중요: 반드시 한국어로만 답변해주세요. 다른 언어는 사용하지 마세요."""
             else -> """You are an MBTI expert. Identify only the MBTI type and zodiac sign from the quiz responses.
                 No detailed analysis needed.
                 IMPORTANT: You must respond only in English. Do not use any other language."""
@@ -58,6 +62,12 @@ class OpenAIService(
             "jp", "ja" -> """あなたはMBTIと占星術の分析を専門とする専門的な性格分析者です。
                 与えられたクイズの回答を分析し、JSON形式で詳細な性格の洞察を提供してください。
                 重要: 回答は必ず日本語で行ってください。英語は一切使用しないでください。"""
+            "zh" -> """你是专门从事MBTI和星座分析的专业性格分析师。
+                分析给定的问卷回答，以JSON格式提供详细的性格洞察。
+                重要：你必须仅用中文回答。不要使用任何其他语言。"""
+            "ko" -> """당신은 MBTI와 별자리 분석을 전문으로 하는 전문 성격 분석가입니다.
+                주어진 퀴즈 답변을 분석하고 JSON 형식으로 상세한 성격 통찰을 제공해주세요.
+                중요: 반드시 한국어로만 답변해주세요. 다른 언어는 사용하지 마세요."""
             else -> """You are an expert personality analyst specializing in MBTI and Zodiac analysis.
                 Analyze the given quiz responses and provide detailed personality insights in JSON format.
                 IMPORTANT: You must respond only in English. Do not use any other language."""
@@ -97,6 +107,8 @@ class OpenAIService(
         val scoresText = if (personalityScores.isNotEmpty()) {
             when (language) {
                 "jp", "ja" -> "\n性格スコア: ${personalityScores.map { "${it.key}: ${it.value}" }.joinToString(", ")}"
+                "zh" -> "\n性格得分: ${personalityScores.map { "${it.key}: ${it.value}" }.joinToString(", ")}"
+                "ko" -> "\n성격 점수: ${personalityScores.map { "${it.key}: ${it.value}" }.joinToString(", ")}"
                 else -> "\nPersonality Scores: ${personalityScores.map { "${it.key}: ${it.value}" }.joinToString(", ")}"
             }
         } else ""
@@ -115,6 +127,36 @@ class OpenAIService(
             5. 関係性における強みと課題
 
             2-3段落の詳細な洞察を日本語で提供してください。
+            """.trimIndent()
+
+            "zh" -> """
+            基于这位${mbtiType}、${zodiacSign}的人的问卷回答，请提供个性化洞察：
+
+            ${questionAnswerPairs.joinToString("\n")}$scoresText
+
+            考虑到他们的${mbtiType}特质和${zodiacSign}特征，请提供以下详细分析：
+            1. 他们的回答如何与MBTI类型相符
+            2. 星座特质如何体现
+            3. 性格得分显示的具体倾向
+            4. 个人成长建议
+            5. 关系中的优势和挑战
+
+            请用中文提供2-3段详细的洞察。
+            """.trimIndent()
+
+            "ko" -> """
+            이 ${mbtiType} ${zodiacSign}인의 퀴즈 답변을 바탕으로 개인화된 통찰을 제공해주세요:
+
+            ${questionAnswerPairs.joinToString("\n")}$scoresText
+
+            그들의 ${mbtiType} 특성과 ${zodiacSign} 특징을 고려하여 다음에 대한 상세한 분석을 제공해주세요:
+            1. 그들의 답변이 MBTI 유형과 어떻게 일치하는지
+            2. 별자리 특성이 어떻게 나타나는지
+            3. 성격 점수가 보여주는 특정 경향
+            4. 개인적 성장을 위한 조언
+            5. 관계에서의 강점과 과제
+
+            한국어로 2-3문단의 상세한 통찰을 제공해주세요.
             """.trimIndent()
 
             else -> """
@@ -136,6 +178,10 @@ class OpenAIService(
         val systemMessage = when (language) {
             "jp", "ja" -> """あなたは性格分析の専門家です。ユーザーの既知のMBTIタイプと星座に基づいて個人化された洞察を提供してください。
                 重要: 回答は必ず日本語で行ってください。英語は一切使用しないでください。"""
+            "zh" -> """你是性格分析专家。请基于用户已知的MBTI类型和星座提供个性化洞察。
+                重要：你必须仅用中文回答。不要使用任何其他语言。"""
+            "ko" -> """당신은 성격 분석 전문가입니다. 사용자의 알려진 MBTI 유형과 별자리를 바탕으로 개인화된 통찰을 제공해주세요.
+                중요: 반드시 한국어로만 답변해주세요. 다른 언어는 사용하지 마세요."""
             else -> """You are a personality analysis expert. Provide personalized insights based on the user's known MBTI type and zodiac sign.
                 IMPORTANT: You must respond only in English. Do not use any other language."""
         }

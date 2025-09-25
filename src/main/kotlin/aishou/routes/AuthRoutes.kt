@@ -109,7 +109,12 @@ fun Route.authRoutes() {
                 val r = call.receive<RegisterReq>()
 
                 val userCol = graph.mongo.db.getCollection<User>("users")
-                val isJapanese = r.lang.lowercase() in listOf("ja", "jp")
+                val userLang = when (r.lang.lowercase()) {
+                    "ja", "jp" -> "ja"
+                    "zh", "zh-cn", "zh-hans", "cn" -> "zh"
+                    "ko", "kr" -> "ko"
+                    else -> "en"
+                }
 
                 // Generate or validate display name
                 val finalDisplayName = if (r.displayName.isNullOrBlank()) {
@@ -120,10 +125,11 @@ fun Route.authRoutes() {
 
                     // Validate length
                     if (trimmedName.length > 13) {
-                        val errorMessage = if (isJapanese) {
-                            "表示名は13文字以内で入力してください"
-                        } else {
-                            "Display name must be 13 characters or less"
+                        val errorMessage = when (userLang) {
+                            "ja" -> "表示名は13文字以内で入力してください"
+                            "zh" -> "显示名称不能超过13个字符"
+                            "ko" -> "표시 이름은 13자 이하여야 합니다"
+                            else -> "Display name must be 13 characters or less"
                         }
                         return@post call.respond(
                             HttpStatusCode.BadRequest,
@@ -134,10 +140,11 @@ fun Route.authRoutes() {
                     // Check if already taken
                     val existingUser = userCol.findOne(User::displayName eq trimmedName)
                     if (existingUser != null) {
-                        val errorMessage = if (isJapanese) {
-                            "この表示名は既に使用されています"
-                        } else {
-                            "This display name is already taken"
+                        val errorMessage = when (userLang) {
+                            "ja" -> "この表示名は既に使用されています"
+                            "zh" -> "此显示名称已被使用"
+                            "ko" -> "이 표시 이름은 이미 사용 중입니다"
+                            else -> "This display name is already taken"
                         }
                         return@post call.respond(
                             HttpStatusCode.Conflict,
@@ -245,14 +252,20 @@ fun Route.authRoutes() {
                     )
                 }
 
-                val isJapanese = currentUser.lang.lowercase() in listOf("ja", "jp")
+                val userLang = when (currentUser.lang.lowercase()) {
+                    "ja", "jp" -> "ja"
+                    "zh", "zh-cn", "zh-hans", "cn" -> "zh"
+                    "ko", "kr" -> "ko"
+                    else -> "en"
+                }
 
                 // Check if user has already changed their name
                 if (currentUser.hasChangedName == true) {
-                    val errorMessage = if (isJapanese) {
-                        "表示名は一度だけ変更できます"
-                    } else {
-                        "Display name can only be changed once"
+                    val errorMessage = when (userLang) {
+                        "ja" -> "表示名は一度だけ変更できます"
+                        "zh" -> "显示名称只能更改一次"
+                        "ko" -> "표시 이름은 한 번만 변경할 수 있습니다"
+                        else -> "Display name can only be changed once"
                     }
                     return@put call.respond(
                         HttpStatusCode.Forbidden,
@@ -263,10 +276,11 @@ fun Route.authRoutes() {
                 // Validate displayName length
                 val trimmedName = req.displayName.trim()
                 if (trimmedName.isBlank() || trimmedName.length > 13) {
-                    val errorMessage = if (isJapanese) {
-                        "表示名は1〜13文字で入力してください"
-                    } else {
-                        "Display name must be 1-13 characters"
+                    val errorMessage = when (userLang) {
+                        "ja" -> "表示名は1〜13文字で入力してください"
+                        "zh" -> "显示名称必须为1-13个字符"
+                        "ko" -> "표시 이름은 1-13자여야 합니다"
+                        else -> "Display name must be 1-13 characters"
                     }
                     return@put call.respond(
                         HttpStatusCode.BadRequest,
@@ -283,10 +297,11 @@ fun Route.authRoutes() {
                 )
 
                 if (existingUser != null) {
-                    val errorMessage = if (isJapanese) {
-                        "この表示名は既に使用されています"
-                    } else {
-                        "This display name is already taken"
+                    val errorMessage = when (userLang) {
+                        "ja" -> "この表示名は既に使用されています"
+                        "zh" -> "此显示名称已被使用"
+                        "ko" -> "이 표시 이름은 이미 사용 중입니다"
+                        else -> "This display name is already taken"
                     }
                     return@put call.respond(
                         HttpStatusCode.Conflict,

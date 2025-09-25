@@ -28,8 +28,12 @@ private fun getLanguageFromRequest(call: ApplicationCall, user: User?): String {
 
     return when {
         headerLang == "ja" || headerLang == "jp" -> "ja"
+        headerLang == "zh" || headerLang == "zh-cn" || headerLang == "zh-hans" || headerLang == "cn" -> "zh"
+        headerLang == "ko" || headerLang == "kr" -> "ko"
         headerLang == "en" -> "en"
         user?.lang == "ja" || user?.lang == "jp" -> "ja"
+        user?.lang == "zh" || user?.lang == "cn" -> "zh"
+        user?.lang == "ko" || user?.lang == "kr" -> "ko"
         user?.lang == "en" -> "en"
         else -> "en" // Default to English
     }
@@ -396,6 +400,8 @@ fun Route.personalityRoutes() {
                 val requestedLang = langParam ?: acceptLangParsed ?: "en"
                 val normalizedLang = when (requestedLang.lowercase()) {
                     "ja", "jp" -> "ja"
+                    "zh", "zh-cn", "zh-hans", "cn" -> "zh"
+                    "ko", "kr" -> "ko"
                     else -> "en"
                 }
 

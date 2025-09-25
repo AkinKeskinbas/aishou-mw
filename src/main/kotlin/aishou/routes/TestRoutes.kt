@@ -29,6 +29,8 @@ fun Route.testRoutes() {
             val requestedLang = langParam ?: acceptLangParsed ?: "en"
             val normalizedLang = when (requestedLang.lowercase()) {
                 "ja", "jp" -> "ja"
+                "zh", "zh-cn", "zh-hans", "cn" -> "zh"
+                "ko", "kr" -> "ko"
                 else -> "en"
             }
 
@@ -58,6 +60,8 @@ fun Route.testRoutes() {
                 val requestedLang = langParam ?: acceptLangParsed ?: "en"
                 val normalizedLang = when (requestedLang.lowercase()) {
                     "ja", "jp" -> "ja"
+                    "zh", "zh-cn", "zh-hans", "cn" -> "zh"
+                    "ko", "kr" -> "ko"
                     else -> "en"
                 }
 

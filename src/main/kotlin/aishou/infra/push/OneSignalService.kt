@@ -164,11 +164,15 @@ class OneSignalService(
             include_subscription_ids = validPlayerIds,
             headings = mapOf(
                 "ja" to "テスト招待",
-                "en" to "Test Invite"
+                "en" to "Test Invite",
+                "zh" to "测试邀请",
+                "ko" to "테스트 초대"
             ),
             contents = mapOf(
                 "ja" to "新しいテスト「$testTitle」に招待されました！",
-                "en" to "You've been invited to take the test: $testTitle!"
+                "en" to "You've been invited to take the test: $testTitle!",
+                "zh" to "您已被邀请参加测试：$testTitle！",
+                "ko" to "테스트 \"$testTitle\"에 초대되었습니다!"
             ),
             data = mapOf(
                 "type" to "test_invite",
@@ -239,11 +243,15 @@ class OneSignalService(
             include_subscription_ids = validPlayerIds,
             headings = mapOf(
                 "ja" to "テスト完了！",
-                "en" to "Test Completed!"
+                "en" to "Test Completed!",
+                "zh" to "测试完成！",
+                "ko" to "테스트 완료!"
             ),
             contents = mapOf(
                 "ja" to "${friendName}がテストを完了しました！相性結果を確認しよう 🎉",
-                "en" to "$friendName completed the test! Check your compatibility results 🎉"
+                "en" to "$friendName completed the test! Check your compatibility results 🎉",
+                "zh" to "$friendName 完成了测试！查看你们的匹配结果 🎉",
+                "ko" to "${friendName}님이 테스트를 완료했습니다! 궁합 결과를 확인해보세요 🎉"
             ),
             data = mapOf(
                 "type" to "invite_accepted",
@@ -300,11 +308,15 @@ class OneSignalService(
             include_subscription_ids = validPlayerIds,
             headings = mapOf(
                 "ja" to "相性結果が出ました！",
-                "en" to "Compatibility Results Ready!"
+                "en" to "Compatibility Results Ready!",
+                "zh" to "匹配结果出来了！",
+                "ko" to "궁합 결과가 나왔습니다!"
             ),
             contents = mapOf(
                 "ja" to "あなたたちの相性は${compatibilityScore}%です！結果を見てみよう ❤️",
-                "en" to "You're ${compatibilityScore}% compatible! Check out your results ❤️"
+                "en" to "You're ${compatibilityScore}% compatible! Check out your results ❤️",
+                "zh" to "你们的匹配度是${compatibilityScore}%！来查看结果吧 ❤️",
+                "ko" to "두 분의 궁합도는 ${compatibilityScore}%입니다! 결과를 확인해보세요 ❤️"
             ),
             data = mapOf(
                 "type" to "compatibility_ready",
@@ -594,11 +606,15 @@ class OneSignalService(
             include_subscription_ids = validPlayerIds,
             headings = mapOf(
                 "ja" to "テスト招待",
-                "en" to "Test Invite"
+                "en" to "Test Invite",
+                "zh" to "测试邀请",
+                "ko" to "테스트 초대"
             ),
             contents = mapOf(
                 "ja" to "${friendName}があなたのテスト招待を辞退しました",
-                "en" to "$friendName declined your test invite"
+                "en" to "$friendName declined your test invite",
+                "zh" to "$friendName 拒绝了您的测试邀请",
+                "ko" to "${friendName}님이 테스트 초대를 거절했습니다"
             ),
             data = mapOf(
                 "type" to "invite_rejected",
