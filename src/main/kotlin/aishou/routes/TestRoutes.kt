@@ -294,6 +294,77 @@ fun Route.testRoutes() {
             val testId = call.parameters["testId"]!!
             val version = call.parameters["version"]!!.toInt()
 
+            // TODO: TEMPORARY FIX - Remove this when proper random quiz endpoint is implemented
+            // Special handling for specific test ID - triggers random test selection
+            if (testId == "674f6a8ee53de6825e45d2ce") {
+                println("DEBUG: Special test ID detected, triggering random quiz mechanism")
+
+                // Get language preference
+                val langParam = call.request.queryParameters["lang"]
+                val acceptLangHeader = call.request.headers["Accept-Language"]
+                val acceptLangParsed = acceptLangHeader?.lowercase()?.split(",")?.firstOrNull()?.split("-")?.firstOrNull()
+
+                val requestedLang = langParam ?: acceptLangParsed ?: "en"
+                val normalizedLang = when (requestedLang.lowercase()) {
+                    "ja", "jp" -> "ja"
+                    "zh", "zh-cn", "zh-hans", "cn" -> "zh"
+                    "ko", "kr" -> "ko"
+                    else -> "en"
+                }
+
+                // Get random free test (no premium filter since no auth)
+                val testMetaCol = graph.mongo.db.getCollection<TestMeta>("tests")
+                val testsInLang = testMetaCol.find(
+                    and(TestMeta::isActive eq true, TestMeta::locale eq normalizedLang, TestMeta::isPremium eq false)
+                ).toList()
+
+                val activeTests = if (testsInLang.isNotEmpty()) {
+                    testsInLang
+                } else {
+                    testMetaCol.find(
+                        and(TestMeta::isActive eq true, TestMeta::locale eq "en", TestMeta::isPremium eq false)
+                    ).toList()
+                }
+
+                if (activeTests.isEmpty()) {
+                    return@get call.respond(
+                        HttpStatusCode.NotFound, BaseResponse<String>(
+                            status = "error",
+                            data = "No active free tests available"
+                        )
+                    )
+                }
+
+                // Select random test and get its questions
+                val randomTest = activeTests.random()
+                println("DEBUG: Selected random test: ${randomTest.testId}, version: ${randomTest.activeVersion}")
+
+                val col = graph.mongo.db.getCollection<TestQuestion>("testQuestions")
+                val questionsInLang = col.find(
+                    and(
+                        TestQuestion::testId eq randomTest.testId,
+                        TestQuestion::version eq randomTest.activeVersion,
+                        TestQuestion::locale eq normalizedLang
+                    )
+                ).sort(ascending(TestQuestion::index)).toList()
+
+                val finalQuestions = if (questionsInLang.isNotEmpty()) {
+                    questionsInLang
+                } else {
+                    col.find(
+                        and(
+                            TestQuestion::testId eq randomTest.testId,
+                            TestQuestion::version eq randomTest.activeVersion,
+                            TestQuestion::locale eq "en"
+                        )
+                    ).sort(ascending(TestQuestion::index)).toList()
+                }
+
+                println("DEBUG: Returning ${finalQuestions.size} random test questions")
+                return@get call.respond(BaseResponse(status = "success", data = finalQuestions))
+            }
+
+            // Regular test question fetching logic
             // Get language preference from header or query parameter - WITH DETAILED LOGGING
             val langParam = call.request.queryParameters["lang"]
             val acceptLangHeader = call.request.headers["Accept-Language"]
