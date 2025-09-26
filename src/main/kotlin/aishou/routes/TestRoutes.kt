@@ -309,6 +309,8 @@ fun Route.testRoutes() {
 
             val normalizedLang = when (requestedLang.lowercase()) {
                 "ja", "jp" -> "ja"
+                "zh", "zh-cn", "zh-hans", "cn" -> "zh"
+                "ko", "kr" -> "ko"
                 else -> "en"
             }
 
