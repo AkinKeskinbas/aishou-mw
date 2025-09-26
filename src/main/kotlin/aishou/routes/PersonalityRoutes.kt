@@ -392,6 +392,22 @@ fun Route.personalityRoutes() {
 
             // Quick quiz - random test selection
             get("/quick-quiz") {
+                val uid = call.principal<JWTPrincipal>()!!.payload.subject
+
+                // Get user to check premium status
+                val userCol = graph.mongo.db.getCollection<User>("users")
+                val user = userCol.findOne(User::_id eq uid)
+
+                if (user == null) {
+                    return@get call.respond(
+                        HttpStatusCode.NotFound,
+                        BaseResponse<String>(status = "error", data = "User not found")
+                    )
+                }
+
+                // Check if user has valid premium subscription
+                val isPremiumValid = user.isPremium && (user.premiumExpiresAt == null || user.premiumExpiresAt > System.currentTimeMillis())
+
                 // Get language preference from header or query parameter
                 val langParam = call.request.queryParameters["lang"]
                 val acceptLangHeader = call.request.headers["Accept-Language"]
@@ -406,17 +422,28 @@ fun Route.personalityRoutes() {
                 }
 
                 // Get all active tests in requested language with fallback to English
+                // Filter by premium status - if user is not premium, only show free tests
                 val testMetaCol = graph.mongo.db.getCollection<TestMeta>("tests")
-                val testsInLang = testMetaCol.find(
+                val premiumFilter = if (isPremiumValid) {
+                    // Premium user can access all tests
                     and(TestMeta::isActive eq true, TestMeta::locale eq normalizedLang)
-                ).toList()
+                } else {
+                    // Non-premium user can only access free tests
+                    and(TestMeta::isActive eq true, TestMeta::locale eq normalizedLang, TestMeta::isPremium eq false)
+                }
+
+                val testsInLang = testMetaCol.find(premiumFilter).toList()
 
                 val activeTests = if (testsInLang.isNotEmpty()) {
                     testsInLang
                 } else {
-                    testMetaCol.find(
+                    // Fallback to English with same premium filtering
+                    val englishPremiumFilter = if (isPremiumValid) {
                         and(TestMeta::isActive eq true, TestMeta::locale eq "en")
-                    ).toList()
+                    } else {
+                        and(TestMeta::isActive eq true, TestMeta::locale eq "en", TestMeta::isPremium eq false)
+                    }
+                    testMetaCol.find(englishPremiumFilter).toList()
                 }
 
                 if (activeTests.isEmpty()) {
