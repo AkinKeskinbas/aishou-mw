@@ -438,6 +438,8 @@ fun Route.personalityRoutes() {
 
                 val questionsNormalizedLang = when (questionsRequestedLang.lowercase()) {
                     "ja", "jp" -> "ja"
+                    "zh", "zh-cn", "zh-hans", "cn" -> "zh"
+                    "ko", "kr" -> "ko"
                     else -> "en"
                 }
 
